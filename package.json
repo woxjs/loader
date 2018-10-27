@@ -1,0 +1,27 @@
+{
+  "name": "@wox/loader",
+  "version": "1.0.0",
+  "description": "The loader module of wox",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/woxjs/loader.git"
+  },
+  "keywords": [
+    "loader"
+  ],
+  "author": "cevio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/woxjs/loader/issues"
+  },
+  "homepage": "https://github.com/woxjs/loader#readme",
+  "dependencies": {
+    "@clusic/utils": "^1.0.0",
+    "@evio/intersect": "^1.0.4",
+    "chokidar": "^2.0.4",
+    "datawatcher": "^1.0.0",
+    "fs-extra": "^7.0.0",
+    "globby": "^8.0.1",
+    "ignore": "^5.0.2"
+  }
+}
