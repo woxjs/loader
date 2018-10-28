@@ -23,6 +23,7 @@ module.exports = class WebpackDictionaryWatcher {
     const watcher = new dataWatch({});
     this.result = watcher.getData();
     watcher.watch('*', () => this.buildFile());
+    this.addDictionary(process.cwd());
   }
 
   loadCommonCompiler(property, conditions, offset = 2, pluginWatchCallback) {
