@@ -43,7 +43,7 @@ module.exports = class Plugin {
       else { dir = path.resolve(this.cwd, 'node_modules', i); }
       filePath = path.resolve(dir, 'app.js');
       filePath = fs.existsSync(filePath) ? filePath : null;
-      pluginTrees[plugin] = {
+      pluginTrees[i] = {
         dir,
         dependencies: plugin.dependencies,
         filePath

@@ -5,7 +5,7 @@ class SinglePlugin {
     this.app = app;
     this.name = name;
     this.dependencies = dependencies;
-    this.plugins[name] = this;
+    app.plugins[name] = this;
     Object.defineProperty(this, 'config', {
       get() {
         return app.PluginConfigs[name];
@@ -40,7 +40,7 @@ export default class ClientParser {
   Controller() {}
 
   AppRuntime(data) {
-    this.app.AppRuntime = data.App;
+    this.app.AppRuntime = data.Bootstrap;
   }
 
   Bootstrap(data) {

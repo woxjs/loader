@@ -72,7 +72,7 @@ module.exports = class WebpackDictionaryWatcher {
       this.addDictionary(dir);
       const compilerPath = path.resolve(dir, '.wox.js');
       if (fs.existsSync(compilerPath)) {
-        const compileExports = utils.loadFile(compileExports);
+        const compileExports = utils.loadFile(compilerPath);
         if (typeof compileExports === 'function') {
           compileExports(this);
         }
@@ -84,7 +84,7 @@ module.exports = class WebpackDictionaryWatcher {
     this.loadCommonCompiler('Webview', ['app/webview/**/*.vue', 'app/webview/**/*.jsx']);
     this.loadCommonCompiler('AsyncWebview', ['app/async-webview/**/*.vue', 'app/async-webview/**/*.jsx']);
     this.loadCommonCompiler('Bootstrap', ['app.vue', 'app.jsx'], 0);
-    this.loadCommonCompiler('AppRuntime', ['app.js'], 0);
+    this.loadCommonCompiler('AppRuntime', ['bootstrap.js'], 0);
     this.loadCommonCompiler('Config', [`config/${this.env}.js`, `config/${this.env}.json`], 1);
     this.loadCommonCompiler('PluginConfigs', [`plugin/${this.env}.json`], 1);
     this.setParser('AsyncWebview', (id, filePath) => {
