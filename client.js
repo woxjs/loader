@@ -40,7 +40,7 @@ export default class ClientParser {
   Controller() {}
 
   AppRuntime(data) {
-    this.AppRuntime = data.App;
+    this.app.AppRuntime = data.App;
   }
 
   Bootstrap(data) {

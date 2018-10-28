@@ -1,6 +1,6 @@
 {
   "name": "@wox/loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The loader module of wox",
   "repository": {
     "type": "git",
