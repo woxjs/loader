@@ -90,6 +90,7 @@ module.exports = class WebpackDictionaryWatcher {
     this.setParser('AsyncWebview', (id, filePath) => {
       return `<code>(function() { async function ${id}(){ return (await import('${filePath}')).default; }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })(),</code>`
     });
+    return this;
   }
 
   setParser(name, callback) {
