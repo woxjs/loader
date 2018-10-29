@@ -1,6 +1,6 @@
 {
   "name": "@wox/loader",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "The loader module of wox",
   "repository": {
     "type": "git",
@@ -22,7 +22,6 @@
     "datawatcher": "^1.0.0",
     "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
-    "ignore": "^5.0.2",
-    "proxy-polyfill": "^0.3.0"
+    "ignore": "^5.0.2"
   }
 }

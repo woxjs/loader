@@ -1,5 +1,4 @@
 import isClass from './is-class';
-const ProxyPolyfill = require('proxy-polyfill/src/proxy');
 
 class SinglePlugin {
   constructor(app, name, dependencies) {
@@ -142,14 +141,43 @@ function createContext(ctx, service, target) {
       target[i] = service[i];
       createContext(ctx, service[i], target[i]);
     } else {
-      const context = new ProxyPolyfill(service[i], {
-        get(obj, prop) {
-          const res = new obj(ctx);
-          if (typeof res[prop] === 'function') return res[prop].bind(res);
-          return res[prop];
-        }
-      });
-      target[i] = context;
+      if (global.Proxy) {
+        const context = new Proxy(service[i], {
+          get(obj, prop) {
+            const res = new obj(ctx);
+            if (typeof res[prop] === 'function') return res[prop].bind(res);
+            return res[prop];
+          }
+        });
+        target[i] = context;
+      } else {
+        target[i] = wrapClass(ctx, service[i]);
+      }
     }
+  }
+}
+
+function wrapClass(ctx, Controller) {
+  let proto = Controller.prototype;
+  const ret = {};
+  while (proto !== Object.prototype) {
+    const keys = Object.getOwnPropertyNames(proto);
+    for (const key of keys) {
+      if (key === 'constructor') continue;
+      const d = Object.getOwnPropertyDescriptor(proto, key);
+      if (typeof d.value === 'function' && !ret.hasOwnProperty(key)) {
+        ret[key] = methodToMiddleware(ctx, Controller, key);
+      }
+    }
+    proto = Object.getPrototypeOf(proto);
+  }
+  
+  return ret;
+  
+  function methodToMiddleware(ctx, Controller, key) {
+    return function classControllerMiddleware() {
+      const controller = new Controller(ctx);
+      return controller[key].call(controller, ctx);
+    };
   }
 }
