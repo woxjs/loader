@@ -1,4 +1,5 @@
 import isClass from './is-class';
+const ProxyPolyfill = require('proxy-polyfill/src/proxy');
 
 class SinglePlugin {
   constructor(app, name, dependencies) {
@@ -141,7 +142,7 @@ function createContext(ctx, service, target) {
       target[i] = service[i];
       createContext(ctx, service[i], target[i]);
     } else {
-      const context = new Proxy(service[i], {
+      const context = new ProxyPolyfill(service[i], {
         get(obj, prop) {
           const res = new obj(ctx);
           if (typeof res[prop] === 'function') return res[prop].bind(res);
