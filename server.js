@@ -82,6 +82,8 @@ module.exports = class WebpackDictionaryWatcher {
     this.loadCommonCompiler('Middleware', ['app/middleware/**/*.js']);
     this.loadCommonCompiler('Service', ['app/service/**/*.js']);
     this.loadCommonCompiler('Component', ['app/components/**/*.jsx', 'app/components/**/*.vue', 'app/components/**/*.js']);
+    this.loadCommonCompiler('Directive', ['app/directives/**/*.js']);
+    this.loadCommonCompiler('Filter', ['app/filters/**/*.js']);
     this.loadCommonCompiler('AsyncComponent', ['app/async-components/**/*.jsx', 'app/async-components/**/*.vue', 'app/async-components/**/*.js']);
     this.loadCommonCompiler('Webview', ['app/webview/**/*.vue', 'app/webview/**/*.jsx']);
     this.loadCommonCompiler('AsyncWebview', ['app/async-webview/**/*.vue', 'app/async-webview/**/*.jsx']);

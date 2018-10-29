@@ -39,6 +39,26 @@ export default class ClientParser {
 
   Controller() {}
 
+  Directive(data) {
+    this.app.Directives = (app, Vue) => {
+      for (const path in data) {
+        if (typeof data[path] === 'function') {
+          Vue.directive(path.replace(/\./g, ''), data[path](app));
+        } else {
+          Vue.directive(path.replace(/\./g, ''), data[path]);
+        }
+      }
+    }
+  }
+
+  Filter(data) {
+    this.app.Filters = (app, Vue) => {
+      for (const path in data) {
+        Vue.directive(path.replace(/\./g, ''), data[path](app));
+      }
+    }
+  }
+
   Component(data) {
     this.app.Components = Vue => {
       for (const path in data) {
@@ -195,7 +215,13 @@ function wrapClass(ctx, Controller) {
   
   function methodToMiddleware(ctx, Controller, key) {
     return function classControllerMiddleware() {
+      const cacheClassObject = Controller.__cacheClass__;
+      if (cacheClassObject) {
+        cacheClassObject.ctx = ctx;
+        return cacheClassObject[key].call(cacheClassObject, ctx);
+      }
       const controller = new Controller(ctx);
+      Controller.__cacheClass__ = controller;
       return controller[key].call(controller, ctx);
     };
   }
