@@ -90,10 +90,10 @@ module.exports = class WebpackDictionaryWatcher {
     this.loadCommonCompiler('Config', [`config/${this.env}.js`, `config/${this.env}.json`], 1);
     this.loadCommonCompiler('PluginConfigs', [`plugin/${this.env}.json`], 1);
     this.setParser('AsyncWebview', (id, filePath) => {
-      return `<code>(function() { async function ${id}(){ return (await import('${filePath}')).default; }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })(),</code>`
+      return `<code>(function() { async function ${id}(){ return (await import('${filePath}')).default; }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })()</code>`
     });
     this.setParser('AsyncComponent', (id, filePath) => {
-      return `<code>(function() { function ${id}(){ return import('${filePath}'); }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })(),</code>`
+      return `<code>(function() { function ${id}(){ return import('${filePath}'); }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })()</code>`
     });
     return this;
   }
