@@ -81,6 +81,8 @@ module.exports = class WebpackDictionaryWatcher {
     this.loadCommonCompiler('Controller', ['app/controller/**/*.js']);
     this.loadCommonCompiler('Middleware', ['app/middleware/**/*.js']);
     this.loadCommonCompiler('Service', ['app/service/**/*.js']);
+    this.loadCommonCompiler('Component', ['app/components/**/*.jsx', 'app/components/**/*.vue', 'app/components/**/*.js']);
+    this.loadCommonCompiler('AsyncComponent', ['app/async-components/**/*.jsx', 'app/async-components/**/*.vue', 'app/async-components/**/*.js']);
     this.loadCommonCompiler('Webview', ['app/webview/**/*.vue', 'app/webview/**/*.jsx']);
     this.loadCommonCompiler('AsyncWebview', ['app/async-webview/**/*.vue', 'app/async-webview/**/*.jsx']);
     this.loadCommonCompiler('Bootstrap', ['app.vue', 'app.jsx'], 0);
@@ -89,6 +91,9 @@ module.exports = class WebpackDictionaryWatcher {
     this.loadCommonCompiler('PluginConfigs', [`plugin/${this.env}.json`], 1);
     this.setParser('AsyncWebview', (id, filePath) => {
       return `<code>(function() { async function ${id}(){ return (await import('${filePath}')).default; }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })(),</code>`
+    });
+    this.setParser('AsyncComponent', (id, filePath) => {
+      return `<code>(function() { function ${id}(){ return import('${filePath}'); }; Object.defineProperty(${id}, 'async', { get() {return true;} }); return ${id}; })(),</code>`
     });
     return this;
   }

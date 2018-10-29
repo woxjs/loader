@@ -39,6 +39,25 @@ export default class ClientParser {
 
   Controller() {}
 
+  Component(data) {
+    this.app.Components = Vue => {
+      for (const path in data) {
+        Vue.component(path.replace(/\./g, ''), data[path]);
+      }
+    }
+  }
+
+  AsyncComponent(data) {
+    this.app.AsyncComponents = Vue => {
+      for (const path in data) {
+        const component = data[path];
+        if (component.async) {
+          Vue.component(path.replace(/\./g, ''), component);
+        }
+      }
+    }
+  }
+
   AppRuntime(data) {
     this.app.AppRuntime = data.Bootstrap;
   }
