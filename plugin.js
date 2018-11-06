@@ -26,22 +26,24 @@ module.exports = class Plugin {
       if (plugin.env === undefined) plugin.env = this.env;
       if (!Array.isArray(plugin.env)) plugin.env = [plugin.env];
       if (plugin.env.indexOf(this.env) === -1) continue;
-      const pluginNodeModuleExports = utils.loadFile(i + '/package.json');
+
+      let dir;
+      if (path.isAbsolute(i)) { dir = i; }
+      else if (i.charAt(0) === '.') { dir = path.resolve(this.cwd, 'plugin', i); }
+      else { dir = path.resolve(this.cwd, 'node_modules', i); }
+
+      const pluginNodeModuleExports = utils.loadFile(dir + '/package.json');
       if (!plugin.dependencies) plugin.dependencies = [];
       if (!Array.isArray(plugin.dependencies)) plugin.dependencies = [plugin.dependencies];
       if (pluginNodeModuleExports.plugin && pluginNodeModuleExports.plugin.dependencies) {
         if (!Array.isArray(pluginNodeModuleExports.plugin.dependencies)) pluginNodeModuleExports.plugin.dependencies = [pluginNodeModuleExports.plugin.dependencies];
         for (let j = 0; j < pluginNodeModuleExports.plugin.dependencies.length; j++) {
-          if (plugin.dependencies.indexOf(pluginNodeModuleExports.plugin.dependencies[i]) === -1) {
-            plugin.dependencies.push(pluginNodeModuleExports.plugin.dependencies[i]);
+          if (plugin.dependencies.indexOf(pluginNodeModuleExports.plugin.dependencies[j]) === -1) {
+            plugin.dependencies.push(pluginNodeModuleExports.plugin.dependencies[j]);
           }
         }
       }
-      let dir, filePath;
-      if (path.isAbsolute(i)) { dir = i; }
-      else if (i.charAt(0) === '.') { dir = path.resolve(this.cwd, 'plugin', i); }
-      else { dir = path.resolve(this.cwd, 'node_modules', i); }
-      filePath = path.resolve(dir, 'app.js');
+      let filePath = path.resolve(dir, 'app.js');
       filePath = fs.existsSync(filePath) ? filePath : null;
       pluginTrees[i] = {
         dir,
