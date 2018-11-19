@@ -144,6 +144,8 @@ export default class ClientParser {
       if (typeof this.app.config === 'function') {
         this.app.config = this.app.config(this.app);
       }
+    } else {
+      this.app.config = {};
     }
   }
 
