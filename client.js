@@ -54,7 +54,7 @@ export default class ClientParser {
   Filter(data) {
     this.app.Filters = (app, Vue) => {
       for (const path in data) {
-        Vue.directive(path.replace(/\./g, ''), data[path](app));
+        Vue.filter(path.replace(/\./g, ''), data[path](app));
       }
     }
   }
