@@ -93,7 +93,7 @@ export default class ClientParser {
         path, 
         Middlewares[path], 
         (target, property, value) => {
-          if (value.length === 1) return target[property](this.app);
+          if (value.length === 1) return target[property] = value(this.app);
           target[property] = value;
         }
       );
@@ -182,7 +182,7 @@ function createContext(ctx, service, target) {
       target[i] = service[i];
       createContext(ctx, service[i], target[i]);
     } else {
-      if (global.Proxy) {
+      if (window.Proxy) {
         const context = new Proxy(service[i], {
           get(obj, prop) {
             const res = new obj(ctx);
