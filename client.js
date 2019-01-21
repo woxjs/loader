@@ -216,7 +216,7 @@ function wrapClass(ctx, Controller) {
   return ret;
   
   function methodToMiddleware(ctx, Controller, key) {
-    return function classControllerMiddleware() {
+    return function classControllerMiddleware(...args) {
       const cacheClassObject = Controller.__cacheClass__;
       if (cacheClassObject) {
         cacheClassObject.ctx = ctx;
@@ -224,7 +224,7 @@ function wrapClass(ctx, Controller) {
       }
       const controller = new Controller(ctx);
       Controller.__cacheClass__ = controller;
-      return controller[key].call(controller, ctx);
+      return controller[key].call(controller, ...args);
     };
   }
 }
