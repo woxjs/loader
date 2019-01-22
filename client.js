@@ -137,25 +137,28 @@ export default class ClientParser {
     Object.freeze(this.app.context.Webview);
   }
 
-  Config(data) {
+  async Config(data) {
     const env = this.app.env.charAt(0).toUpperCase() + this.app.env.substring(1);
     if (data[env]) {
       this.app.config = data[env];
       if (typeof this.app.config === 'function') {
-        this.app.config = this.app.config(this.app);
+        this.app.config = await this.app.config(this.app);
       }
     } else {
       this.app.config = {};
     }
   }
 
-  Plugin(data) {
-    data.forEach(plugin => {
-      const PluginClassModule = new SinglePlugin(this.app, plugin.name, plugin.dependencies);
+  async Plugin(data) {
+    for (let i = 0; i < data.length; i++) {
+      const plugin = data[i];
       if (typeof plugin.exports === 'function') {
-        plugin.exports(this.app, PluginClassModule);
+        await plugin.exports(
+          this.app, 
+          new SinglePlugin(this.app, plugin.name, plugin.dependencies)
+        );
       }
-    });
+    }
   }
 
   PluginConfigs(data) {
