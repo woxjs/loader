@@ -1,13 +1,18 @@
 {
   "name": "@wox/loader",
-  "version": "1.0.15",
+  "version": "2.0.0",
   "description": "The loader module of wox",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/woxjs/loader.git"
   },
   "keywords": [
-    "loader"
+    "loader",
+    "wox",
+    "webpack",
+    "plugin",
+    "vue"
   ],
   "author": "cevio",
   "license": "MIT",
@@ -16,12 +21,8 @@
   },
   "homepage": "https://github.com/woxjs/loader#readme",
   "dependencies": {
-    "@clusic/utils": "^1.0.0",
     "@evio/intersect": "^1.0.4",
-    "chokidar": "^2.0.4",
-    "datawatcher": "^1.0.0",
-    "fs-extra": "^7.0.1",
-    "globby": "^8.0.2",
-    "ignore": "^5.0.4"
+    "chalk": "^2.4.2",
+    "chokidar": "^2.1.2"
   }
 }
