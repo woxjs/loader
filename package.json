@@ -1,6 +1,6 @@
 {
   "name": "@wox/loader",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "The loader module of wox",
   "main": "lib/index.js",
   "repository": {
